@@ -1,0 +1,262 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+namespace Linq_Demo1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            /*
+            int[] number = { 01, 20, 22, 56, 31, 16, 17, 49 };
+
+            //res is reference which stores value of the query.
+            //Declarative Query syntax
+            var res = from n in number
+                      where (n % 2 == 0)
+                      select n;
+
+            //Syntax using Extension method (Lambda Expression)
+            var res = number.Where(n => n % 2 == 0);
+
+
+            //execution of query
+            Console.WriteLine("First query");
+            foreach (var i in res)
+            {
+
+                Console.WriteLine(i);
+            }
+
+            //differed execution
+            
+            number[1] = 9;
+            Console.WriteLine("Second query");
+            foreach (var i in res)
+            {
+                
+                Console.WriteLine(i);
+            }
+            */
+            //collection initializer
+            List<Student> studs = Student.GetAll();
+            /*
+             
+            var res1 = from s in studs
+                       select new {s.RNo, s.Name}; //anonymous 
+
+            foreach (var i in res1)
+            {
+
+                Console.WriteLine(i);
+            }
+
+
+            //get all marks as->1,2,3,4,5,6,7,8,9 in a sequence by using selectMany method
+            //var res2 = from s in studs
+            //           from m in s.Marks
+            //           select m;
+
+            var res2 = studs.SelectMany(s => s.Marks); //gives u marks 
+
+            // var res2 = studs.Select(s => s.Marks); //wont give u values.
+            foreach (var item in res2)
+            {
+                Console.Write(item+"    ");
+                
+            }
+            */
+            /*
+
+          //sorting on the basis of first name and then age
+
+          var res4 = from s in studs
+                     orderby s.Name, s.Age
+                     select s;
+          //var res4 = studs.OrderBy(s => s.Name).ThenBy(s=>s.Age);
+          foreach (var item in res4)
+          {
+              //ascending order
+              Console.WriteLine(item.RNo + " " + item.Name + "    ");
+
+          }
+          Console.WriteLine("\n");
+
+
+          var res5 = from s in studs
+                     orderby s.Name descending
+                     select s;
+          //var res5 = studs.OrderByDescending(s => s.Name); //lambda  exp
+           var res4 = studs.OrderByDescending(s => s.Name).ThenBy(s=>s.Age);
+          foreach (var item in res5)
+          {
+              //ascending order
+              Console.WriteLine(item.RNo+" "+item.Name + "    ");
+
+          }
+          Console.WriteLine("\n");
+          
+
+            var res6 = from s in studs
+                       group s by s.Age;
+
+           // var res6 = studs.GroupBy(s => s.Age);
+            foreach (var grp in res6)
+            {
+                //key will be associated with age as grouping by age.
+                Console.WriteLine("Age :"+grp.Key+"Group");
+                foreach (var item in grp)
+                {
+                    Console.WriteLine(item.RNo + " " + item.Name + "    ");
+                }
+            }
+            Console.WriteLine("\n");
+
+           
+             Console.WriteLine("---------------------Set Operators------------------------");
+            int[] arr1 = { 1, 2, 3, 5, 4};
+            int[] arr2 = { 8, 3, 4, 5, 1};
+            Console.WriteLine("Union");
+            var res9 = arr1.Union(arr2);
+            foreach (var i in res9)
+            {
+
+                Console.Write(i+"   ");
+            }
+            Console.WriteLine("\n");
+
+
+            var res10 = arr1.Intersect(arr2);
+            Console.WriteLine("intersect");
+            foreach (var i in res10)
+            {
+
+                Console.Write(i+"   ");
+            }
+            Console.WriteLine("\n");
+
+            var res11 = arr1.Except(arr2);
+            Console.WriteLine("Except 1 ->2");
+            foreach (var i in res11)
+            {
+
+                Console.Write(i+"   ");
+            }
+            Console.WriteLine("\n");
+
+
+            var res12 = arr2.Except(arr1);
+            Console.WriteLine("Except 2_->1");
+            foreach (var i in res12)
+            {
+
+                Console.Write(i + "   ");
+            }
+            Console.WriteLine("\n");
+             */
+            Console.WriteLine("-------------------Conersion Operators------------------------");
+            int[] arr1 = { 1, 2, 3, 5, 4 };
+            int[] arr2 = { 8, 3, 4, 5, 1 };
+            List<int> res13 = arr1.ToList();
+            int[] arr3 = res13.ToArray();//is also ienumerable
+
+            IEnumerable<int> nos = arr3;//is ienumerable
+           // int[] nos_1 = nos.AsEnumerable; //wont work
+
+            IQueryable<int> nos_2 = nos.AsQueryable();
+            IQueryable<int> nos_3 = arr3.AsQueryable();
+           
+            
+
+            object[] objs = { 1,'C',"hello",1.5,5,"Hi",'A'};
+            var elements_int = objs.OfType<int>();
+            Console.WriteLine("ofType int");
+            foreach (var i in elements_int)
+            {
+
+                Console.Write(i + "   ");
+            }
+            Console.WriteLine("\n");
+
+
+            var elements_char = objs.OfType<char>();
+
+            Console.WriteLine("ofType char");
+            foreach (var i in elements_char)
+            {
+
+                Console.Write(i + "   ");
+            }
+            Console.WriteLine("\n");
+
+            var elements_str = objs.OfType<string>();
+
+            Console.WriteLine("ofType string");
+            foreach (var i in elements_str)
+            {
+
+                Console.Write(i + "   ");
+            }
+            Console.WriteLine("\n");
+            Console.WriteLine("---------------------------Aggregate Operators------------------------------------");
+            Console.WriteLine("\nSum :" + arr1.Sum()+"\nMax :"+arr1.Max()+"\nMin :"+arr1.Min()+"\nAverage :"+arr1.Average());
+            Console.WriteLine("\n");
+           
+
+            Console.WriteLine("---------------------Element Operators------------------------");
+            int[] array1 = { 1, 2, 3, 5, 4 };
+            int[] array2 = new int[0];
+            int[] array3 = { 10 };
+            Console.WriteLine("First :"+array1.First());
+            Console.WriteLine("Last :" + array1.Last());
+            Console.WriteLine("ElementAt :" + array1.ElementAt(2));
+
+            // Console.WriteLine("First :" + array2.First()); //is gives exception as null array.
+            Console.WriteLine("FirstOrDefault :" + array2.FirstOrDefault());//as no element in array default 0 is given
+            Console.WriteLine("LastOrDefault :" + array2.LastOrDefault());//as no element in array default 0 is given
+            Console.WriteLine("Single :" + array3.Single());//sequence should have only one element or gives only one element of ienumerable list
+
+            var re1 = studs.Single(s => s.RNo == 101);
+            Console.WriteLine("Single :" + re1);
+
+            Console.WriteLine();
+
+
+            Console.WriteLine("---------------------Anonymous------------------------");
+            //get rollno, name of student starting name with "P"
+            var ord = studs.Where(s => s.Name.StartsWith("P")).Select(s=>new { s.RNo,s.Name});//ienumerable of anonymous type//gives only rno and name
+            foreach (var item in ord)
+            {
+                Console.WriteLine(item.RNo + "    " + item.Name);
+            //Console.WriteLine(item.RNo + "    " + item.Name+""+s.Age); //age will gove u error
+            }
+            Console.WriteLine();
+
+            var ord1 = studs.Where(s => s.Name.StartsWith("P")).Select(s => new {Rno= s.RNo, studname= s.Name });//ienumerable of anonymous type//gives only rno and name
+            foreach (var item in ord1)
+            {
+                Console.WriteLine(item.Rno + "    " + item.studname);
+                //Console.WriteLine(item.RNo + "    " + item.Name+""+s.Age); //age will gove u error
+            }
+            Console.WriteLine();
+
+            //var avg = from s in studs
+            //          group s.Marks by ;
+
+
+            var ord2 = studs.Where(s => s.Age > 18 && s.Age < 20).Select(s => new { s.Name ,s.Age});//ienumerable of anonymous type//gives only rno and name
+            foreach (var item in ord2)
+            {
+                Console.WriteLine(item.Age+"    age:   "+item.Age);
+                //Console.WriteLine(item.RNo + "    " + item.Name+""+s.Age); //age will gove u error
+            }
+            Console.WriteLine();
+
+            Console.ReadKey();
+        }
+    }
+}
